@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import supabase from '../supabaseClient';
-import { useNavigate } from 'react-router-dom'; // Importamos el hook useNavigate
+import { useNavigate } from 'react-router-dom';
+import { supabase } from '../supabaseClient'; // Asegúrate de que la configuración de Supabase esté correcta
 
 function Register() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
-  const navigate = useNavigate(); // Usamos el hook useNavigate para redirigir al usuario
+  const [error, setError] = useState(null);
+  const navigate = useNavigate(); // Redirigir después del registro exitoso
 
   const handleRegister = async (e) => {
     e.preventDefault();
@@ -19,19 +19,19 @@ function Register() {
 
       if (error) throw error;
 
-      alert('Usuario registrado con éxito!');
-      navigate('/home'); // Redirige al usuario a la página de inicio después de registrarse
+      alert('Registro exitoso! Por favor, inicia sesión.');
+      navigate('/login');  // Redirige a la página de login después de registro exitoso
     } catch (error) {
-      setError(error.message);
+      setError(error.message); // Mostrar errores si los hay
     }
   };
 
   return (
     <div>
-      <h2>Registrarse</h2>
+      <h2>Registro</h2>
       <form onSubmit={handleRegister}>
         <div>
-          <label>Email</label>
+          <label>Email:</label>
           <input
             type="email"
             value={email}
@@ -40,7 +40,7 @@ function Register() {
           />
         </div>
         <div>
-          <label>Contraseña</label>
+          <label>Contraseña:</label>
           <input
             type="password"
             value={password}
@@ -48,9 +48,10 @@ function Register() {
             required
           />
         </div>
-        {error && <p style={{ color: 'red' }}>{error}</p>}
-        <button type="submit">Registrarse</button>
+        <button type="submit">Registrar</button>
       </form>
+
+      {error && <p style={{ color: 'red' }}>{error}</p>} {/* Mostrar errores si los hay */}
     </div>
   );
 }
