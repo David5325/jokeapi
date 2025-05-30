@@ -1,24 +1,22 @@
-import { Routes, Route } from 'react-router-dom'
-import Home from './pages/Home'
-import Favoritos from './pages/Favoritos'
-import Aleatorio from './pages/Aleatorio'
-import Usuario from './pages/Usuario'
-import Guardados from './pages/Guardados'
-import Navbar from './components/Navbar'
+import React from 'react';
+import { Routes, Route } from 'react-router-dom';
+import Register from './pages/Register';  // Asegúrate de que el componente esté correctamente importado
+import Login from './pages/Login';  // Asegúrate de que el componente esté correctamente importado
+import Home from './pages/Home';  // Asegúrate de que tienes una página Home
+import Navbar from './components/Navbar';  // Si tienes un Navbar, lo importas también
 
 function App() {
   return (
-    <>
+    <div>
+      <Navbar /> {/* Este Navbar se renderizará en todas las páginas */}
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/favoritos" element={<Favoritos />} />
-        <Route path="/aleatorio" element={<Aleatorio />} />
-        <Route path="/usuario" element={<Usuario />} />
-        <Route path="/guardados" element={<Guardados />} />
+        <Route path="/" element={<Home />} />  {/* Ruta raíz */}
+        <Route path="/login" element={<Login />} /> {/* Ruta para Login */}
+        <Route path="/register" element={<Register />} /> {/* Ruta para Register */}
+        {/* Aquí puedes añadir más rutas si es necesario */}
       </Routes>
-      <Navbar />
-    </>
-  )
+    </div>
+  );
 }
 
-export default App
+export default App;

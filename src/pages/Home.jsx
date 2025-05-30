@@ -1,43 +1,45 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react';
 import {
   obtenerFavoritos,
   guardarFavorito,
   eliminarFavorito
-} from '../data/favoritos'
+} from '../data/favoritos';
 
 function Home() {
-  const [jokes, setJokes] = useState([])
-  const [search, setSearch] = useState('')
-  const [category, setCategory] = useState('Any')
-  const [favoritos, setFavoritos] = useState(obtenerFavoritos())
+  const [jokes, setJokes] = useState([]);
+  const [search, setSearch] = useState('');
+  const [category, setCategory] = useState('Any');
+  const [favoritos, setFavoritos] = useState(obtenerFavoritos());
 
   const fetchJokes = async () => {
     try {
-      const url = `https://v2.jokeapi.dev/joke/${category}?amount=10${search ? `&contains=${search}` : ''}`
-      const res = await fetch(url)
-      const data = await res.json()
+      const url = `https://v2.jokeapi.dev/joke/${category}?amount=10${search ? `&contains=${search}` : ''}`;
+      const res = await fetch(url);
+      const data = await res.json();
 
-      const results = data.jokes ? data.jokes : [data]
-      setJokes(results)
+      console.log(data); // Verifica los datos de la API en la consola
+
+      const results = data.jokes ? data.jokes : [data];
+      setJokes(results);
     } catch (err) {
-      console.error(err)
+      console.error('Error al obtener los chistes:', err);
     }
-  }
+  };
 
   useEffect(() => {
-    fetchJokes()
-  }, [category, search])
+    fetchJokes();
+  }, [category, search]);
 
   const toggleFavorito = (joke) => {
-    const existe = favoritos.some((j) => j.id === joke.id)
+    const existe = favoritos.some((j) => j.id === joke.id);
     if (existe) {
-      eliminarFavorito(joke.id)
-      setFavoritos(favoritos.filter((j) => j.id !== joke.id))
+      eliminarFavorito(joke.id);
+      setFavoritos(favoritos.filter((j) => j.id !== joke.id));
     } else {
-      guardarFavorito(joke)
-      setFavoritos([...favoritos, joke])
+      guardarFavorito(joke);
+      setFavoritos([...favoritos, joke]);
     }
-  }
+  };
 
   return (
     <div style={{ paddingBottom: '60px' }}>
@@ -61,25 +63,29 @@ function Home() {
         </select>
       </div>
 
-      {jokes.map((joke, i) => (
-        <div key={i} style={{ marginBottom: '1rem', padding: '10px', border: '1px solid #ccc' }}>
-          {joke.type === 'single' ? (
-            <p>{joke.joke}</p>
-          ) : (
-            <>
-              <p><strong>{joke.setup}</strong></p>
-              <p>{joke.delivery}</p>
-            </>
-          )}
-          <button onClick={() => toggleFavorito(joke)}>
-            {favoritos.some((j) => j.id === joke.id)
-              ? 'Quitar de favoritos'
-              : 'Añadir a favoritos'}
-          </button>
-        </div>
-      ))}
+      {jokes.length === 0 ? (
+        <p>No hay chistes disponibles.</p>
+      ) : (
+        jokes.map((joke, i) => (
+          <div key={i} style={{ marginBottom: '1rem', padding: '10px', border: '1px solid #ccc' }}>
+            {joke.type === 'single' ? (
+              <p>{joke.joke}</p>
+            ) : (
+              <>
+                <p><strong>{joke.setup}</strong></p>
+                <p>{joke.delivery}</p>
+              </>
+            )}
+            <button onClick={() => toggleFavorito(joke)}>
+              {favoritos.some((j) => j.id === joke.id)
+                ? 'Quitar de favoritos'
+                : 'Añadir a favoritos'}
+            </button>
+          </div>
+        ))
+      )}
     </div>
-  )
+  );
 }
 
-export default Home
+export default Home;
