@@ -12,6 +12,7 @@ function Register() {
     e.preventDefault();
 
     try {
+      // Intentamos registrar al usuario en Supabase
       const { user, error } = await supabase.auth.signUp({
         email,
         password,
@@ -27,7 +28,7 @@ function Register() {
   };
 
   return (
-    <div>
+    <div style={{ padding: '20px' }}>
       <h2>Registro</h2>
       <form onSubmit={handleRegister}>
         <div>
@@ -37,6 +38,7 @@ function Register() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
+            style={{ marginBottom: '10px', padding: '8px', width: '100%' }}
           />
         </div>
         <div>
@@ -46,9 +48,10 @@ function Register() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
+            style={{ marginBottom: '10px', padding: '8px', width: '100%' }}
           />
         </div>
-        <button type="submit">Registrar</button>
+        <button type="submit" style={{ padding: '10px 20px' }}>Registrar</button>
       </form>
 
       {error && <p style={{ color: 'red' }}>{error}</p>} {/* Mostrar errores si los hay */}

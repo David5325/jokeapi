@@ -16,13 +16,12 @@ function Navbar() {
     }}>
       {/* Enlaces de navegación */}
       <Link to="/home">Home</Link>
-      <Link to="/Favoritos">Favoritos</Link>
-      <Link to="/Aleatorio">Aleatorio</Link>
-      <Link to="/Usuario">Usuario</Link>
-      <Link to="/Guardados">Guardados</Link>
-      
-      {/* Botón de logout */}
-      <Logout /> {/* Agregamos el botón de logout aquí */}
+      <Link to="/favoritos">Favoritos</Link>
+      <Link to="/aleatorio">Aleatorio</Link>
+      <Link to="/usuario">Usuario</Link>
+      <Link to="/guardados">Guardados</Link>
+      <Link to="/register">Registro</Link> {/* Enlace para el registro */}
+      <Logout />
     </nav>
   );
 }
